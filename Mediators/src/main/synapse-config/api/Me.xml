@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <api context="/me" name="Me" xmlns="http://ws.apache.org/ns/synapse">
   <resource methods="GET" protocol="http">
-    <inSequence/>
+    <inSequence>
+      <header name="To" scope="default" value="header_value"/>
+    </inSequence>
     <outSequence/>
     <faultSequence/>
   </resource>

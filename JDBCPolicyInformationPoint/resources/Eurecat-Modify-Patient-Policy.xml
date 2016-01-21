@@ -20,7 +20,7 @@
 			<AnyOf>
 				<AllOf>
 					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
-						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">modify</AttributeValue>
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
 						<AttributeDesignator MustBePresent="false"
 							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
 							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
@@ -35,7 +35,7 @@
 				<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">true</AttributeValue>
 				<AttributeDesignator
 					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
-					AttributeId="subjectIsCarerOfResource" DataType="http://www.w3.org/2001/XMLSchema#string"
+					AttributeId="SUBJECT_IS_CARER_OF_RESOURCE" DataType="http://www.w3.org/2001/XMLSchema#string"
 					MustBePresent="false" />
 			</Apply>
 		</Condition>

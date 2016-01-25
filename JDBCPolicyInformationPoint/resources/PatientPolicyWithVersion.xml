@@ -1,5 +1,5 @@
 <Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
-	xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicyId="PatientPolicy"
+	xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicyId="PatientPolicyForAPIM"
 	RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable"
 	Version="1.0">
 	<Target />
@@ -8,7 +8,7 @@
 			<AnyOf>
 				<AllOf>
 					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
-						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">\/.*\/[CPT]\d{5}\/(?:info\/*.*)$
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">\/.*\/[CPT]\d{5}\@carbon.super\@carbon.super\/(?:info\/*.*)$
 						</AttributeValue>
 						<AttributeDesignator MustBePresent="false"
 							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
@@ -44,7 +44,7 @@
 			<AnyOf>
 				<AllOf>
 					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
-						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">\/.*\/[CPT]\d{5}\/(?:info\/*.*)$
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">\/.*\/[CPT]\d{5}\@carbon.super\/(?:info\/*.*)$
 						</AttributeValue>
 						<AttributeDesignator MustBePresent="false"
 							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
@@ -100,7 +100,7 @@
 			<AnyOf>
 				<AllOf>
 					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
-						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">\/patient\/P\d{5}\/(?:info\/*.*|progress\/*.*|physical_activity\/*.*|drug_prescription\/*.*)$
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">\/patient\/P\d{5}\@carbon.super\/(?:info\/*.*|progress\/*.*|physical_activity\/*.*|drug_prescription\/*.*)$
 						</AttributeValue>
 						<AttributeDesignator MustBePresent="false"
 							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
@@ -145,7 +145,7 @@
 			<AnyOf>
 				<AllOf>
 					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
-						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">\/patient\/P\d{5}\/(?:physical_activity\/*.*)$
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">\/patient\/P\d{5}\@carbon.super\/(?:physical_activity\/*.*)$
 						</AttributeValue>
 						<AttributeDesignator MustBePresent="false"
 							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
@@ -201,7 +201,7 @@
 			<AnyOf>
 				<AllOf>
 					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
-						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">\/patient\/P\d{5}\/(?:info\/*.*|drug_prescription\/*.*)$
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">\/patient\/P\d{5}\@carbon.super\/(?:info\/*.*|drug_prescription\/*.*)$
 						</AttributeValue>
 						<AttributeDesignator MustBePresent="false"
 							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
@@ -246,7 +246,7 @@
 			<AnyOf>
 				<AllOf>
 					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
-						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">\/patient\/P\d{5}
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">\/patient\/P\d{5}\@carbon.super
 						</AttributeValue>
 						<AttributeDesignator MustBePresent="false"
 							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
@@ -282,7 +282,7 @@
 			<AnyOf>
 				<AllOf>
 					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
-						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">\/patient\/P\d{5}
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">\/patient\/P\d{5}\@carbon.super
 						</AttributeValue>
 						<AttributeDesignator MustBePresent="false"
 							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"

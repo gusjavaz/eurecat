@@ -150,6 +150,7 @@ public class JDBCAttributeFinder extends AbstractPIPAttributeFinder {
 			condition = true;
 		}
 		values.add(String.valueOf(condition));
+		connection.close();
 		return values;
 	}
 

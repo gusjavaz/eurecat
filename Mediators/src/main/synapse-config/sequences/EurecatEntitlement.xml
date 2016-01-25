@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="EurecatEntitlement" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <entitlementService
+    callbackClass="org.wso2.carbon.identity.entitlement.mediator.callback.UTEntitlementCallbackHandler"
+    client="basicAuth" remoteServicePassword="admin"
+    remoteServiceUrl="http://localhost" remoteServiceUserName="admin">
+    <onReject/>
+    <onAccept/>
+    <obligations/>
+    <advice/>
+  </entitlementService>
+</sequence>

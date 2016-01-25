@@ -2,4 +2,7 @@
     <artifact name="Me" groupId="com.example.Mediators.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/api/Me.xml</file>
     </artifact>
+    <artifact name="EurecatEntitlement" groupId="com.example.Mediators.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/EurecatEntitlement.xml</file>
+    </artifact>
 </artifacts>

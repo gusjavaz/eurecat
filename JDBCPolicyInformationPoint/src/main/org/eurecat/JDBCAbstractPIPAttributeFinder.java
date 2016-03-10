@@ -23,7 +23,7 @@ import org.wso2.carbon.identity.entitlement.pip.AbstractPIPAttributeFinder;
  * @author gvazquez
  *
  */
-public class JDBCAttributeFinder extends AbstractPIPAttributeFinder {
+public class JDBCAbstractPIPAttributeFinder extends AbstractPIPAttributeFinder {
 
 	/**
 	 * Connection pool is used to create connection to database
@@ -42,6 +42,7 @@ public class JDBCAttributeFinder extends AbstractPIPAttributeFinder {
 	private static final String SUBJECT_IS_CLINITIAN = "SUBJECT_IS_CLINITIAN";
 	private static final String SUBJECT_IS_THERAPIST = "SUBJECT_IS_THERAPIST";
 	private static final String SUBJECT_IS_PATIENT = "SUBJECT_IS_PATIENT";
+	private static final String SUBJECT_IS_OWNER_OF_RESOURCE = "SUBJECT_IS_OWNER_OF_RESOURCE";
 
 	@Override
 	public void init(Properties properties) throws Exception {
@@ -58,29 +59,13 @@ public class JDBCAttributeFinder extends AbstractPIPAttributeFinder {
 		supportedAttributes.add(SUBJECT_IS_CLINITIAN);
 		supportedAttributes.add(SUBJECT_IS_THERAPIST);
 		supportedAttributes.add(SUBJECT_IS_PATIENT);
+		supportedAttributes.add(SUBJECT_IS_OWNER_OF_RESOURCE);
 	}
 
 	@Override
 	public String getModuleName() {
 		return "Eurecat PIP Attribute Finder";
 	}
-//
-//	@Override
-//	public Set<String> getAttributeValues(URI arg0, URI arg1, URI arg2,
-//			String arg3, EvaluationCtx arg4) throws Exception {
-//		System.out.println("arg0: " + arg0);
-//		System.out.println("arg1: " + arg1);
-//		System.out.println("arg2: " + arg2);
-//		System.out.println("arg3: " + arg3);
-//		Set<Attributes> attributes = arg4.getRequestCtx().getAttributesSet();
-//		String[] stringAttr = new String[attributes.size()];
-//		attributes.toArray(stringAttr);
-//		for (int i=0;i<stringAttr.length;i++){
-//			System.out.println("Attribute: " +stringAttr[i]);
-//		}
-//		System.out.println("EvaluationCtx: " + arg4);
-//		return super.getAttributeValues(arg0, arg1, arg2, arg3, arg4);
-//	}
 
 	@Override
 	public Set<String> getAttributeValues(String subjectId, String resourceId,
@@ -94,7 +79,7 @@ public class JDBCAttributeFinder extends AbstractPIPAttributeFinder {
 		System.out.println("issuer: " + issuer);
 
 		Set<String> values = new HashSet<String>();
-		resourceId = resourceId.split("\\/")[2];
+//		resourceId = resourceId.split("\\/")[2];
 		if (attributeId.equalsIgnoreCase(SUBJECT_IS_CARER_OF_RESOURCE))
 			values = subjectIsCarerOfResource(subjectId, resourceId);
 		if (attributeId.equalsIgnoreCase(SUBJECT_IS_SAME_AS_RESOURCE))
@@ -107,13 +92,29 @@ public class JDBCAttributeFinder extends AbstractPIPAttributeFinder {
 			values = subjectIsInRole(subjectId, "therapist");
 		if (attributeId.equalsIgnoreCase(SUBJECT_IS_PATIENT))
 			values = subjectIsInRole(subjectId, "patient");
+		if (attributeId.equalsIgnoreCase(SUBJECT_IS_OWNER_OF_RESOURCE))
+			values = subjectIsOwnerOfResource(subjectId, resourceId, "OWNER");
 
 		System.out.println("Response: " + values.toString());
 		return values;
 	}
 
+	private Set<String> subjectIsOwnerOfResource(String subjectId,
+			String resourceId, String relationId) throws Exception {
+		String sqlStmt = "SELECT * FROM RELATION WHERE SOURCE_ID ='"
+				+ subjectId + "' AND TARGET_ID ='" + resourceId
+				+ "' AND RELATION_ID =" + relationId + ";";
+		return executeQuery(sqlStmt); 
+	}
+
 	private Set<String> subjectIsCarerOfResource(String subjectId,
 			String resourceId) throws Exception {
+		try {
+		resourceId = resourceId.split("\\/")[8];
+		}
+		catch (java.lang.ArrayIndexOutOfBoundsException e){
+			resourceId = resourceId.split("\\/")[7];
+		}
 		String sqlStmt = "select * from PATIENT_CARER where CARER='"
 				+ subjectId + "' and PATIENT='" + resourceId + "';";
 		return executeQuery(sqlStmt);

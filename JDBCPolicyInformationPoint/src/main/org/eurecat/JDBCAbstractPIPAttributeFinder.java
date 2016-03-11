@@ -93,7 +93,7 @@ public class JDBCAbstractPIPAttributeFinder extends AbstractPIPAttributeFinder {
 		if (attributeId.equalsIgnoreCase(SUBJECT_IS_PATIENT))
 			values = subjectIsInRole(subjectId, "patient");
 		if (attributeId.equalsIgnoreCase(SUBJECT_IS_OWNER_OF_RESOURCE))
-			values = subjectIsOwnerOfResource(subjectId, resourceId, "OWNER");
+			values = subjectIsOwnerOfResource(subjectId, resourceId, "owner");
 
 		System.out.println("Response: " + values.toString());
 		return values;

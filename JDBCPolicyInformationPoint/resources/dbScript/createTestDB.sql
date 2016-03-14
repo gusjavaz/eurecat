@@ -1,15 +1,14 @@
 drop table PATIENT_CARER
 create table PATIENT_CARER ( carer varchar(100), patient varchar(100));
-insert into PATIENT_CARER (carer,patient) values ('carer01', 'patient01');
-insert into PATIENT_CARER (carer,patient) values ('carer01', 'patient02');
-insert into PATIENT_CARER (carer,patient) values ('carer01', 'patient03');
-insert into PATIENT_CARER (carer,patient) values ('carer01', 'patient04');
-insert into PATIENT_CARER (carer,patient) values ('carer01', 'patient05');
-insert into PATIENT_CARER (carer,patient) values ('carer02', 'patient02');
-insert into PATIENT_CARER (carer,patient) values ('carer02', 'patient04');
-insert into PATIENT_CARER (carer,patient) values ('carer02', 'patient06');
-insert into PATIENT_CARER (carer,patient) values ('carer03', 'patient06');
-insert into PATIENT_CARER (carer,patient) values ('carer03', 'patient09');
+insert into PATIENT_CARER (carer,patient) values ('clinitian01@carbon.super', 'patient01@carbon.super');
+insert into PATIENT_CARER (carer,patient) values ('clinitian01@carbon.super', 'patient02@carbon.super');
+insert into PATIENT_CARER (carer,patient) values ('clinitian01@carbon.super', 'patient03@carbon.super');
+insert into PATIENT_CARER (carer,patient) values ('clinitian02@carbon.super', 'patient02@carbon.super');
+insert into PATIENT_CARER (carer,patient) values ('clinitian02@carbon.super', 'patient04@carbon.super');
+insert into PATIENT_CARER (carer,patient) values ('clinitian02@carbon.super', 'patient06@carbon.super');
+insert into PATIENT_CARER (carer,patient) values ('therapist01@carbon.super', 'patient01@carbon.super');
+insert into PATIENT_CARER (carer,patient) values ('therapist01@carbon.super', 'patient02@carbon.super');
+insert into PATIENT_CARER (carer,patient) values ('therapist01@carbon.super', 'patient03@carbon.super');
 
 drop table RELATION
 create 	table 	RELATION (source_id varchar(100),  target_id varchar(100),  relation_id varchar(100));

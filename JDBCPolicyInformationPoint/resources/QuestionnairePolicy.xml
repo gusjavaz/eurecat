@@ -3,7 +3,7 @@
 	RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable"
 	Version="1.0">
 	<Target />
-	<Rule RuleId="GetFixedQuestionnaires" Effect="Deny">
+	<Rule RuleId="GetFixedQuestionnaires" Effect="Permit">
 		<Target>
 			<AnyOf>
 				<AllOf>
@@ -26,9 +26,9 @@
 			</AnyOf>
 		</Target>
 		<Condition>
-			<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+			<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:or">
 				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
-					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">false</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">true</AttributeValue>
 					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
 						<AttributeDesignator
 							Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
@@ -37,7 +37,7 @@
 					</Apply>
 				</Apply>
 				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
-					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">false</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">true</AttributeValue>
 					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
 						<AttributeDesignator
 							Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"

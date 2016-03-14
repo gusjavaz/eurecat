@@ -4,8 +4,7 @@
 		Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
 		<Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
 			IncludeInResult="false">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">admin@carbon.super
-			</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">clinitian01@carbon.super</AttributeValue>
 		</Attribute>
 	</Attributes>
 	<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">

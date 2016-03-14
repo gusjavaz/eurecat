@@ -15,6 +15,8 @@ import java.util.TreeSet;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 import org.wso2.balana.ctx.EvaluationCtx;
 import org.wso2.balana.xacml3.Attributes;
 import org.wso2.carbon.identity.entitlement.pip.AbstractPIPAttributeFinder;
@@ -25,15 +27,11 @@ import org.wso2.carbon.identity.entitlement.pip.AbstractPIPAttributeFinder;
  */
 public class JDBCAbstractPIPAttributeFinder extends AbstractPIPAttributeFinder {
 
-	/**
-	 * Connection pool is used to create connection to database
-	 */
 	private DataSource dataSource;
 	private Connection conn;
+    private static Logger LOGGER = Logger.getLogger("JDBCAbstractPIPAttributeFinder");
 
-	/**
-	 * List of attribute finders supported by the this PIP attribute finder
-	 */
+
 	private Set<String> supportedAttributes = new TreeSet<String>();
 
 	private static final String SUBJECT_IS_CARER_OF_RESOURCE = "SUBJECT_IS_CARER_OF_RESOURCE";
@@ -64,22 +62,21 @@ public class JDBCAbstractPIPAttributeFinder extends AbstractPIPAttributeFinder {
 
 	@Override
 	public String getModuleName() {
-		return "Eurecat PIP Attribute Finder";
+		return "Eurecat PIP JDBC Abstract Attribute Finder";
 	}
 
 	@Override
 	public Set<String> getAttributeValues(String subjectId, String resourceId,
 			String actionId, String environmentId, String attributeId,
 			String issuer) throws Exception {
-		System.out.println("subjectId: " + subjectId);
-		System.out.println("resourceId: " + resourceId);
-		System.out.println("actionId: " + actionId);
-		System.out.println("environmentId: " + environmentId);
-		System.out.println("attributeId: " + attributeId);
-		System.out.println("issuer: " + issuer);
+		LOGGER.info("subjectId: " + subjectId);
+		LOGGER.info("resourceId: " + resourceId);
+		LOGGER.info("actionId: " + actionId);
+		LOGGER.info("environmentId: " + environmentId);
+		LOGGER.info("attributeId: " + attributeId);
+		LOGGER.info("issuer: " + issuer);
 
 		Set<String> values = new HashSet<String>();
-//		resourceId = resourceId.split("\\/")[2];
 		if (attributeId.equalsIgnoreCase(SUBJECT_IS_CARER_OF_RESOURCE))
 			values = subjectIsCarerOfResource(subjectId, resourceId);
 		if (attributeId.equalsIgnoreCase(SUBJECT_IS_SAME_AS_RESOURCE))
@@ -95,7 +92,7 @@ public class JDBCAbstractPIPAttributeFinder extends AbstractPIPAttributeFinder {
 		if (attributeId.equalsIgnoreCase(SUBJECT_IS_OWNER_OF_RESOURCE))
 			values = subjectIsOwnerOfResource(subjectId, resourceId, "owner");
 
-		System.out.println("Response: " + values.toString());
+		LOGGER.info("Response: " + values.toString());
 		return values;
 	}
 
@@ -141,7 +138,7 @@ public class JDBCAbstractPIPAttributeFinder extends AbstractPIPAttributeFinder {
 	}
 
 	private HashSet<String> executeQuery(String sqlStmt) throws Exception {
-		System.out.println("QUERY: " + sqlStmt);
+		LOGGER.info("QUERY: " + sqlStmt);
 		HashSet<String> values = new HashSet<String>();
 		Connection connection = dataSource.getConnection();
 		PreparedStatement prepStmt = connection.prepareStatement(sqlStmt);

@@ -54,7 +54,7 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.3.1</version>
 				<configuration>
-					<outputDirectory>C:\0-WSO2\demo\wso2is-5.1.0\repository\components\lib</outputDirectory>
+					<outputDirectory>C:\0-WSO2\cluster\wso2is-5.1.0-01\repository\components\lib</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>

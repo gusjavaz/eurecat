@@ -25,7 +25,7 @@
     </dependencies>
 
     <build>
-        <finalName>avis.com</finalName>
+        <finalName>travelocity.com</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

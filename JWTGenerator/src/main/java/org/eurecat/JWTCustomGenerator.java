@@ -7,7 +7,10 @@ import org.wso2.carbon.apimgt.impl.APIConstants;
 import org.wso2.carbon.apimgt.impl.dto.APIKeyValidationInfoDTO;
 import org.wso2.carbon.apimgt.impl.token.JWTGenerator;
 
-public class CustomTokenGenerator extends JWTGenerator {
+public class JWTCustomGenerator extends JWTGenerator {
+	
+	
+	
 
 	public Map populateStandardClaims(APIKeyValidationInfoDTO keyValidationInfoDTO, String apiContext, String version)
 			throws APIManagementException {

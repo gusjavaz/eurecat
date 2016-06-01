@@ -4,10 +4,7 @@ import java.net.URI;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -15,21 +12,26 @@ import java.util.TreeSet;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.wso2.balana.XACMLConstants;
+import org.wso2.balana.attr.AttributeValue;
+import org.wso2.balana.attr.BagAttribute;
+import org.wso2.balana.attr.StringAttribute;
+import org.wso2.balana.cond.EvaluationResult;
 import org.wso2.balana.ctx.EvaluationCtx;
-import org.wso2.balana.xacml3.Attributes;
-import org.wso2.carbon.identity.entitlement.pip.AbstractPIPAttributeFinder;
+import org.wso2.carbon.identity.entitlement.PDPConstants;
+import org.wso2.carbon.identity.entitlement.pip.PIPAttributeFinder;
  
 /**
  * @author gvazquez
  *
  */
-public class JDBCAbstractPIPAttributeFinder extends AbstractPIPAttributeFinder {
+public class JDBCAbstractPIPAttributeFinder implements PIPAttributeFinder {
 
 	private DataSource dataSource;
 	private Connection conn;
-    private static Logger LOGGER = Logger.getLogger("JDBCAbstractPIPAttributeFinder");
+    private static Logger LOGGER = LoggerFactory.getLogger("JDBCAbstractPIPAttributeFinder");
 
 
 	private Set<String> supportedAttributes = new TreeSet<String>();
@@ -65,36 +67,36 @@ public class JDBCAbstractPIPAttributeFinder extends AbstractPIPAttributeFinder {
 		return "Eurecat PIP JDBC Abstract Attribute Finder";
 	}
 
-	@Override
-	public Set<String> getAttributeValues(String subjectId, String resourceId,
-			String actionId, String environmentId, String attributeId,
-			String issuer) throws Exception {
-		LOGGER.info("subjectId: " + subjectId);
-		LOGGER.info("resourceId: " + resourceId);
-		LOGGER.info("actionId: " + actionId);
-		LOGGER.info("environmentId: " + environmentId);
-		LOGGER.info("attributeId: " + attributeId);
-		LOGGER.info("issuer: " + issuer);
-
-		Set<String> values = new HashSet<String>();
-		if (attributeId.equalsIgnoreCase(SUBJECT_IS_CARER_OF_RESOURCE))
-			values = subjectIsCarerOfResource(subjectId, resourceId);
-		if (attributeId.equalsIgnoreCase(SUBJECT_IS_SAME_AS_RESOURCE))
-			values = subjectIsSameAsResource(subjectId, resourceId);
-		if (attributeId.equalsIgnoreCase(RESOURCE_IS_ASSIGNED))
-			values = resourceIsAssigned(resourceId);
-		if (attributeId.equalsIgnoreCase(SUBJECT_IS_CLINITIAN))
-			values = subjectIsInRole(subjectId, "clinitian");
-		if (attributeId.equalsIgnoreCase(SUBJECT_IS_THERAPIST))
-			values = subjectIsInRole(subjectId, "therapist");
-		if (attributeId.equalsIgnoreCase(SUBJECT_IS_PATIENT))
-			values = subjectIsInRole(subjectId, "patient");
-		if (attributeId.equalsIgnoreCase(SUBJECT_IS_OWNER_OF_RESOURCE))
-			values = subjectIsOwnerOfResource(subjectId, resourceId, "owner");
-
-		LOGGER.info("Response: " + values.toString());
-		return values;
-	}
+//	@Override
+//	public Set<String> getAttributeValues(String subjectId, String resourceId,
+//			String actionId, String environmentId, String attributeId,
+//			String issuer) throws Exception {
+//		System.out.println("subjectId: " + subjectId);
+//		System.out.println("resourceId: " + resourceId);
+//		System.out.println("actionId: " + actionId);
+//		System.out.println("environmentId: " + environmentId);
+//		System.out.println("attributeId: " + attributeId);
+//		System.out.println("issuer: " + issuer);
+//
+//		Set<String> values = new HashSet<String>();
+//		if (attributeId.equalsIgnoreCase(SUBJECT_IS_CARER_OF_RESOURCE))
+//			values = subjectIsCarerOfResource(subjectId, resourceId);
+//		if (attributeId.equalsIgnoreCase(SUBJECT_IS_SAME_AS_RESOURCE))
+//			values = subjectIsSameAsResource(subjectId, resourceId);
+//		if (attributeId.equalsIgnoreCase(RESOURCE_IS_ASSIGNED))
+//			values = resourceIsAssigned(resourceId);
+//		if (attributeId.equalsIgnoreCase(SUBJECT_IS_CLINITIAN))
+//			values = subjectIsInRole(subjectId, "clinitian");
+//		if (attributeId.equalsIgnoreCase(SUBJECT_IS_THERAPIST))
+//			values = subjectIsInRole(subjectId, "therapist");
+//		if (attributeId.equalsIgnoreCase(SUBJECT_IS_PATIENT))
+//			values = subjectIsInRole(subjectId, "patient");
+//		if (attributeId.equalsIgnoreCase(SUBJECT_IS_OWNER_OF_RESOURCE))
+//			values = subjectIsOwnerOfResource(subjectId, resourceId, "owner");
+//
+//		LOGGER.info("Response: " + values.toString());
+//		return values;
+//	}
 
 	private Set<String> subjectIsOwnerOfResource(String subjectId,
 			String resourceId, String relationId) throws Exception {
@@ -155,5 +157,102 @@ public class JDBCAbstractPIPAttributeFinder extends AbstractPIPAttributeFinder {
 	@Override
 	public Set<String> getSupportedAttributes() {
 		return supportedAttributes;
+	}
+
+	@Override
+	public void clearCache() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void clearCache(String[] arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+    public Set<String> getAttributeValues(URI attributeType, URI attributeId, URI category,
+            String issuer, EvaluationCtx evaluationCtx) throws Exception {
+	    EvaluationResult subject;
+        String subjectId = null;
+        EvaluationResult resource;
+        String resourceId = null;
+        EvaluationResult action;
+        String actionId = null;
+        EvaluationResult environment;
+        String environmentId = null;
+        Set<String> attributeValues = null;
+        
+        subject = evaluationCtx.getAttribute(new URI(StringAttribute.identifier), new URI(
+                PDPConstants.SUBJECT_ID_DEFAULT), issuer, new URI(XACMLConstants.SUBJECT_CATEGORY));
+        if (subject != null && subject.getAttributeValue() != null &&
+            subject.getAttributeValue().isBag()) {
+            BagAttribute bagAttribute = (BagAttribute) subject.getAttributeValue();
+            if (bagAttribute.size() > 0) {
+                subjectId = ((AttributeValue) bagAttribute.iterator().next()).encode();
+                if (LOGGER.isDebugEnabled()) {
+                	LOGGER.debug(String.format("Finding attributes for the subject %1$s",
+                                            subjectId));
+                }
+            }
+        }
+
+        resource = evaluationCtx.getAttribute(new URI(StringAttribute.identifier), new URI(
+                PDPConstants.RESOURCE_ID_DEFAULT), issuer, new URI(XACMLConstants.RESOURCE_CATEGORY));
+        if (resource != null && resource.getAttributeValue() != null &&
+            resource.getAttributeValue().isBag()) {
+            BagAttribute bagAttribute = (BagAttribute) resource.getAttributeValue();
+            if (bagAttribute.size() > 0) {
+                resourceId = ((AttributeValue) bagAttribute.iterator().next()).encode();
+                if (LOGGER.isDebugEnabled()) {
+                	LOGGER.debug(String.format("Finding attributes for the resource %1$s",
+                                            resourceId));
+                }
+            }
+        }
+
+        action = evaluationCtx.getAttribute(new URI(StringAttribute.identifier), new URI(
+                PDPConstants.ACTION_ID_DEFAULT), issuer, new URI(XACMLConstants.ACTION_CATEGORY));
+        if (action != null && action.getAttributeValue() != null &&
+            action.getAttributeValue().isBag()) {
+            BagAttribute bagAttribute = (BagAttribute) action.getAttributeValue();
+            if (bagAttribute.size() > 0) {
+                actionId = ((AttributeValue) bagAttribute.iterator().next()).encode();
+                if (LOGGER.isDebugEnabled()) {
+                	LOGGER.debug(String.format("Finding attributes for the action %1$s",
+                                            actionId));
+                }
+            }
+        }
+
+        environment = evaluationCtx.getAttribute(new URI(StringAttribute.identifier), new URI(
+                PDPConstants.ENVIRONMENT_ID_DEFAULT), issuer, new URI(XACMLConstants.ENT_CATEGORY));
+        if (environment != null && environment.getAttributeValue() != null &&
+            environment.getAttributeValue().isBag()) {
+            BagAttribute bagAttribute = (BagAttribute) environment.getAttributeValue();
+            if (bagAttribute.size() > 0) {
+                environmentId = ((AttributeValue) bagAttribute.iterator().next()).encode();
+                if (LOGGER.isDebugEnabled()) {
+                	LOGGER.debug(String.format("Finding attributes for the environment %1$s",
+                                            environmentId));
+                }
+            }
+        }
+
+		System.out.println("EvaluationCtx: " + evaluationCtx);
+//		System.out.println("resourceId: " + resourceId);
+//		System.out.println("actionId: " + actionId);
+//		System.out.println("environmentId: " + environmentId);
+//		System.out.println("attributeId: " + attributeId);
+//		System.out.println("issuer: " + issuer);
+//
+		return null;
+	}
+
+	@Override
+	public boolean overrideDefaultCache() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

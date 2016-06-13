@@ -9,6 +9,7 @@ public class TenantContextHolder {
        if(tenantId == null){
            throw new NullPointerException();
        }
+      System.out.println("Setting in context tenant: "+tenantId);
       contextHolder.set(tenantId);
    }
 

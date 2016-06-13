@@ -27,4 +27,6 @@
 		</property>
 	</bean>
 
+	<jee:jndi-lookup id="JNDIDefaultTargetDataSource"
+		jndi-name="jdbc/tenant_carbon_super" />
 </beans>

@@ -1,4 +1,4 @@
-package org.eurecat.dynamic_datasource.model;
+package org.eurecat.some_service.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -24,9 +24,10 @@ public class RoutingDataSource extends AbstractRoutingDataSource {
 		String tenantId = TenantContextHolder.getTenantDb();
 		String jndiDatasource = null;
 		if (tenantId == null || tenantId.equals("-1234"))
-			jndiDatasource = "jdbc/dataSourceTenantSuper";
+			jndiDatasource = "jdbc/Tenant_Super";
 		else
-			jndiDatasource = "jdbc/dataSourceTenant" + tenantId;
+			jndiDatasource = "jdbc/Tenant_" + tenantId;
+		log.debug(">>> Looking for JNDI datasource {}",jndiDatasource);
 		JndiTemplate jndi = new JndiTemplate();
 		DataSource dataSource = null;
 		try {
@@ -34,6 +35,7 @@ public class RoutingDataSource extends AbstractRoutingDataSource {
 		} catch (NamingException e) {
 			log.error("NamingException for " + jndiDatasource, e);
 		}
+		log.debug(">>> Datasource found: {}", dataSource);
 		return dataSource;
 	}
 }

@@ -4,12 +4,11 @@
 	<persistence-unit name="test">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
-      	<class>org.eurecat.dynamic_datasource.model.SomeData</class>
+      	<class>org.eurecat.some_service.model.SomeData</class>
 
 		<properties>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
-			<property name="hibernate.hbm2ddl.auto" value="validate" />
-			<!-- property name="hibernate.show_sql" value="true" /-->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.show_sql" value="true" />
 		</properties>
 	</persistence-unit>
 </persistence>

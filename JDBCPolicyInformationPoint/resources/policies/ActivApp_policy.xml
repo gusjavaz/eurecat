@@ -1,0 +1,371 @@
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+	xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicyId="ActivApp"
+	RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable"
+	Version="1.0">
+	<Target />
+	<Rule RuleId="user_retrieve" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_ActivApp_(local:\/\/axis2services)?\/mHB-service-wearables-hub\/v1/wearableUser/user\/\d{5}\/retrieve</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_PATIENT_
+					</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="activity_summary" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_ActivApp_(local:\/\/axis2services)?\/mHB-service-wearables-hub\/\d\.\d\/rest\/v1\/wearableData\/activitySummary\/user\/\d{5}\/*.\/list</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_CLINICIAN_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_PATIENT_
+					</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="prescription_save" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_ActivApp_(local:\/\/axis2services)?\/mHB-service-user-device\/\d\.\d\/v1\/prescription\/save</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_CLINICIAN_
+					</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="user_summary" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_ActivApp_(local:\/\/axis2services)?\/mHB-service-physical-activity\/\d\.\d\/v1\/summary\/user\/\d{5}\/startDate\/*.\/list</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_CLINICIAN_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_PATIENT_
+					</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="devices" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_ActivApp_(local:\/\/axis2services)?\/mHB-service-user-device\/\d\.\d\/rest\/v1\/devices\/*.\/device/\d{5}</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_ADMIN_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_CLINICIAN_
+					</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="device_unpair" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_ActivApp_(local:\/\/axis2services)?\/mHB-service-user-device\/\d\.\d\/rest\/v1\/users\/device\/unpair</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_ADMIN_</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_CLINICIAN_
+					</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="recipient_alert_list" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_ActivApp_(local:\/\/axis2services)?\/mHB-service-alert\/v1\/v1\/recipient\/.*\/alert/list</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_ADMIN_</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_CLINICIAN_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_PATIENT_
+					</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="target_alert_list" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_ActivApp_(local:\/\/axis2services)?\/mHB-service-alert\/v1\/v1\/target\/*.\/alert/list</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_ADMIN_</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_CLINICIAN_
+					</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="questionnaire_answer" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_ActivApp_(local:\/\/axis2services)?\/mHB-service-questionnaire\/v1\/rest\/v1\/questionnaire\/answer</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_PATIENT_
+					</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="questionnaire_summary" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_ActivApp_(local:\/\/axis2services)?\/mHB-service-questionnaire\/v1\/rest\/v1\/questionnaire\/summary</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_ADMIN_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_CLINICIAN_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_PATIENT_
+					</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+</Policy>        

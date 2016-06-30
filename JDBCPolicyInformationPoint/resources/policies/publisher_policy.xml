@@ -1,0 +1,29 @@
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+	xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicyId="Publisher"
+	RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable"
+	Version="1.0">
+	<Target />
+	<Rule RuleId="publisher" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">*.\/publisher
+						</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+	</Rule>
+</Policy>        

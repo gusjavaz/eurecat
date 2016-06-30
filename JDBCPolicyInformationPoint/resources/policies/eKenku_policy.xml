@@ -1,0 +1,390 @@
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+	xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicyId="eKenku"
+	RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable"
+	Version="1.0">
+	<Target />
+	<Rule RuleId="user_devices" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_eKenku_(local:\/\/axis2services)?\/mHB-service-medic-device-hub\/\d\.\d\/rest\/v1\/users\/\d{5}\/devices
+						</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_SUPERADMIN_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_ADMIN_</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_INSTALLER_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_MEDIC_</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="questionnaires_summary" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_eKenku_(local:\/\/axis2services)?\/mHB-service-questionnaire\/v1\/rest\/v1\/questionnaire\/summary</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_SUPERADMIN_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_ADMIN_</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_INSTALLER_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_MEDIC_</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="questionnaires_answer" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_eKenku_(local:\/\/axis2services)?\/mHB-service-questionnaire\/v1\/rest\/v1\/questionnaire\/answer</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_PATIENT_
+					</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="device_unpair" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_eKenku_(local:\/\/axis2services)?\/mHB-service-user-device\/\d\.\d\/rest\/v1\/users\/device\/unpair
+						</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_SUPERADMIN_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_ADMIN_</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_INSTALLER_
+					</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="devices" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_eKenku_(local:\/\/axis2services)?\/mHB-service-user-device\/\d\.\d\/rest\/v1\/devices\/EKENKU\/device\/\d{5}
+						</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_SUPERADMIN_
+					</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="alert_test" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_eKenku_(local:\/\/axis2services)?\/mHB-service-alert\/v1\/v1\/test</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_SUPERADMIN_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_ADMIN_</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_INSTALLER_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_MEDIC_</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="alert_list" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_eKenku_(local:\/\/axis2services)?\/mHB-service-alert\/v1\/v1\/recipient\/.*\/alert/list</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_SUPERADMIN_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_ADMIN_</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_INSTALLER_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_MEDIC_</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="alert_patch" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_eKenku_(local:\/\/axis2services)?\/mHB-service-alert\/v1\/v1\/alertId\/.*\/alert\/patch</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_SUPERADMIN_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_ADMIN_</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_INSTALLER_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_MEDIC_</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="rule_save" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_eKenku_(local:\/\/axis2services)?\/mHB-service-rule\/v1\/v1\/rule\/save</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_SUPERADMIN_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_ADMIN_</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_INSTALLER_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_MEDIC_</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="rule_delete" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">^_eKenku_(local:\/\/axis2services)?\/mHB-service-rule\/v1\/v1\/.*\/rule\/delete</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+						<AttributeDesignator MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_SUPERADMIN_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_ADMIN_</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_INSTALLER_
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">_IS_MEDIC_</AttributeValue>
+				</Apply>
+				<AttributeDesignator
+					Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+					AttributeId="_IN_APP_ROLES_" DataType="http://www.w3.org/2001/XMLSchema#string"
+					MustBePresent="false" />
+			</Apply>
+		</Condition>
+	</Rule>
+</Policy>        
